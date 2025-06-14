@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <title>Happy Father's Day</title>
+</head>
+<body>
+
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="fathers-day-song.mp3" type="audio/mpeg">
+  </audio>
+
+  <div class="card">
+    <h1>Happy Father's Day!</h1>
+    <p>To the best dad in the world,<br>
+    Thank you for your endless love, strength, and support.<br>
+    You are our hero, our guide, and our biggest blessing.</p>
+    <div class="heart">❤️</div>
+
+    <!-- Play/Pause Button -->
+    <button id="music-button" class="music-button" onclick="toggleMusic()">Play Music 🎵</button>
+  </div>
+
+  <!-- Slideshow -->
+  <div class="slideshow">
+    <button id="prev-slide" aria-label="Previous slide"><</button>
+    <img class="slide-image" src="img1.jpg" alt="Slideshow Image">
+    <button id="next-slide" aria-label="Next slide">></button>
+  </div>
+
+  <div class="footer">
+    Made with love for Dad • 2025
+  </div>
+
+  <script>
+    // Audio controls
+    const music = document.getElementById("bg-music");
+    const button = document.getElementById("music-button");
+
+    function toggleMusic() {
+      if (music.paused) {
+        music.play();
+        button.textContent = "Pause Music ⏸️";
+      } else {
+        music.pause();
+        button.textContent = "Play Music 🎵";
+      }
+    }
+
+    // Slideshow
+    const images = [
+      "img1.jpg","img2.jpg","img3.jpg","img4.jpg","img5.jpg",
+      "img6.jpg","img7.jpg","img8.jpg","img9.jpg","img10.jpg",
+      "img11.jpg","img12.jpg","img13.jpg","img14.jpg","img15.jpg","img16.jpg", "img17.jpg",
+      "img18.jpg", "img19.jpg", "img20.jpg", "img21.jpg", "img22.jpg", "img23.jpg", "img24.jpg",
+      "img25.jpg", "img26.jpg", "img27.jpg", "img28.jpg", "img29.jpg", "img30.jpg", "img31.jpg",
+      "img32.jpg","img33.jpg", "img34.jpg", "img35.jpg", "img36.jpg", "img37.jpg"
+    ];
+
+    let currentIndex = 0;
+    const img = document.querySelector('.slide-image');
+
+    function showImage(index) {
+      img.src = images[index];
+    }
+
+    function showNextImage() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showImage(currentIndex);
+    }
+    function showPreviousImage() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showImage(currentIndex);
+    }
+  
+    document.getElementById('next-slide').addEventListener('click', showNextImage);
+    document.getElementById('prev-slide').addEventListener('click', showPreviousImage);
+    setInterval(showNextImage, 5000); // 5-second autoplay
+
+    // Preload images for smoother transitions
+    window.onload = () => {
+      images.slice(1).forEach(src => {
+        const img = new Image();
+        img.src = src;
+      });
+    };
+
+    function createConfetti(type) {
+    const confetti = document.querySelector('.confetti');
+    const element = document.createElement('div');
+    element.classList.add(type);
+    element.textContent = (type==='heart') ? '❤️' : '';
+    element.style.setProperty('--horizontal', Math.random() * 100 - 50 + 'vw'); // randomly move left or right
+    element.style.left = Math.random() * 100 + 'vw';
+    element.style.top = '-50px';
+
+    confetti.prepend(element);
+
+    setTimeout(() => {
+        element.remove();
+    }, 5000);
+}
+
+setInterval(() => {
+    createConfetti(Math.random() < 0.5 ? 'heart' : 'circle'); 
+}, 500);
+
+  </script>
+<div class="confetti"></div>
+</body>
+</html>
